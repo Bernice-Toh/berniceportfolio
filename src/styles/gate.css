@@ -1,0 +1,275 @@
+/* ============================================================
+   FOLDER GATE — the cover/splash shown on a fresh landing at "/".
+   A small CLOSED replica of the pink folder (same tokens as the real
+   shell) sitting on the shared desk wash. Clicking zooms it up while
+   the real folder rises underneath, so the two motions cross-dissolve
+   into one "small folder becomes the big folder" reveal.
+   ============================================================ */
+
+/* registered so the conic angle can be animated (smooth border comet) */
+@property --gate-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.875rem;
+  padding: var(--space-5);
+  /* nudge to match .folder's translateY(2vh) so the mini and the real
+     folder share the same centre — the zoom hands off in place */
+  transform: translateY(2vh);
+  /* transparent: the body desk shows now, the rising shell shows during
+     the opening cross-dissolve */
+  animation: gate-enter 700ms var(--ease-out-expo) both;
+}
+
+@keyframes gate-enter {
+  from {
+    opacity: 0;
+    transform: translateY(2vh) scale(0.96);
+  }
+}
+
+/* ---- the mini folder (a real <button>: keyboard + focus ring free) ---- */
+.gate__folder {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  display: block;
+  width: clamp(9rem, 22vw, 14rem);
+  aspect-ratio: 5 / 4;
+  transform-origin: center center;
+  filter: drop-shadow(0 1.25rem 2.25rem rgba(150, 40, 70, 0.22));
+  transition: filter var(--dur-med) var(--ease-out);
+  /* gentle resting breathe; replaced wholesale by gate-zoom on opening */
+  animation: gate-float 3.6s var(--ease-in-out) infinite alternate;
+}
+
+/* the running border light — a conic "comet" masked to a thin ring on the
+   face edge: invisible at rest, chases around the perimeter on hover/focus */
+.gate__folder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0 var(--radius-xl) var(--radius-xl) var(--radius-xl);
+  padding: 2.5px; /* ring thickness */
+  background: conic-gradient(
+    from var(--gate-angle),
+    transparent 0deg,
+    transparent 250deg,
+    var(--rose) 300deg,
+    #ffffff 330deg,
+    var(--pink-accent) 350deg,
+    transparent 360deg
+  );
+  /* show only the padding ring (border-box minus content-box) */
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  /* transform mirrors .gate__face's hover lift so the ring stays welded to
+     the face edge (the comet animates --gate-angle, not transform) */
+  transition: opacity var(--dur-med) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+@keyframes gate-float {
+  from {
+    transform: translateY(-0.3rem);
+  }
+  to {
+    transform: translateY(0.3rem);
+  }
+}
+
+/* the dark-pink TAB popping above the face's top-left edge */
+.gate__tab {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  margin-bottom: -1px;
+  width: 44%;
+  height: 18%;
+  min-height: 1.1rem;
+  background: linear-gradient(180deg, var(--folder-back), var(--folder-back-2));
+  border-radius: 0.6rem 0.6rem 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* the light-pink FACE */
+.gate__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden; /* clips the sweeping shine to the rounded face */
+  background: linear-gradient(160deg, var(--face), var(--face-2));
+  border-radius: 0 var(--radius-xl) var(--radius-xl) var(--radius-xl);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 -0.1875rem 0.5rem -0.25rem rgba(150, 40, 70, 0.18);
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* the diagonal shine streak that glides across the face on hover/focus */
+.gate__face::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 47%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.55) 53%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+}
+
+.gate__spark {
+  position: relative;
+  z-index: 2; /* stays crisp above the shine */
+  font-size: clamp(1.4rem, 4vw, 2.25rem);
+  line-height: 1;
+  color: var(--pink-accent);
+  animation: gate-twinkle 2.8s var(--ease-in-out) infinite;
+}
+
+@keyframes gate-twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(8deg);
+  }
+}
+
+/* hover / focus PEEK — applied to the children (not the button) so it
+   never collides with the button's running float animation */
+.gate__folder:hover .gate__face,
+.gate__folder:focus-visible .gate__face {
+  transform: translateY(-0.35rem) scale(1.02);
+}
+
+.gate__folder:hover .gate__tab,
+.gate__folder:focus-visible .gate__tab {
+  transform: translateY(-0.5rem);
+}
+
+/* ---- hover / focus: brighten + sweep the shine + run the border light ---- */
+.gate__folder:hover,
+.gate__folder:focus-visible {
+  filter: drop-shadow(0 1.5rem 2.5rem rgba(150, 40, 70, 0.26))
+    drop-shadow(0 0 0.85rem rgba(233, 138, 161, 0.55));
+}
+
+.gate__folder:hover::after,
+.gate__folder:focus-visible::after {
+  opacity: 1;
+  /* identical to .gate__face's hover transform → ring tracks the lifted face */
+  transform: translateY(-0.35rem) scale(1.02);
+  /* soft glow trailing the comet head so the running light reads */
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+  animation: gate-border-run 1.6s linear infinite;
+}
+
+.gate__folder:hover .gate__face::before,
+.gate__folder:focus-visible .gate__face::before {
+  animation: gate-shine 1.25s var(--ease-out) infinite;
+}
+
+@keyframes gate-shine {
+  0% {
+    transform: translateX(-130%);
+  }
+  55%,
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+@keyframes gate-border-run {
+  to {
+    --gate-angle: 360deg;
+  }
+}
+
+/* ---- caption ---- */
+.gate__caption {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-tight);
+  color: var(--mauve-deep);
+  animation: gate-caption-pulse 2.4s var(--ease-in-out) infinite;
+}
+
+.gate__star {
+  color: var(--pink-accent);
+  font-style: normal;
+}
+
+@keyframes gate-caption-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ============ OPENING — zoom the mini up + clear the caption ============ */
+.gate--opening {
+  pointer-events: none; /* let the rising shell beneath take over */
+}
+
+.gate--opening .gate__folder {
+  animation: gate-zoom 580ms var(--ease-out-expo) forwards;
+}
+
+@keyframes gate-zoom {
+  to {
+    transform: scale(4.2);
+    opacity: 0;
+  }
+}
+
+.gate--opening .gate__caption {
+  animation: gate-caption-out 260ms var(--ease-out) forwards;
+}
+
+@keyframes gate-caption-out {
+  to {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+}
+
+/* Reduced motion is already neutralised globally (global.css) — durations
+   collapse to ~0, so gate-zoom still fires animationend and the shell is
+   revealed immediately with no large movement. */

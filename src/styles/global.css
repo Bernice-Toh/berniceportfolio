@@ -1,0 +1,99 @@
+@import "./theme.css";
+
+/* ============ RESET / BASE ============ */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Fluid root: 1rem scales with viewport width so the folder shape is
+   preserved at any size (~16px large desktop, ~11px small). */
+html {
+  font-size: clamp(11px, 0.42vw + 7.9px, 17px);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  /* Ambient desk behind the folder (design ref: soft-pink-glow).
+     Uses ONLY --desk-* tokens so the light/dark swap never touches
+     the folder/portfolio palette. */
+  background: radial-gradient(
+      1100px 650px at 50% -20%,
+      var(--desk-ambient-1),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 600px at 92% 112%,
+      var(--desk-ambient-2),
+      transparent 55%
+    ),
+    radial-gradient(
+      700px 700px at -8% 55%,
+      var(--desk-ambient-3),
+      transparent 60%
+    ),
+    radial-gradient(
+      140% 110% at 50% 45%,
+      transparent 60%,
+      var(--desk-vignette) 100%
+    ),
+    var(--desk);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pink-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--blush);
+  color: var(--ink);
+}
+
+/* Reduced motion: gentler global stance; the petal canvas and pill
+   animation handle themselves in JS as well. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important; /* staggers must not hide content */
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

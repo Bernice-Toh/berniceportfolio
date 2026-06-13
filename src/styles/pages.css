@@ -1,0 +1,2742 @@
+/* ============================================================
+   PAGES — layout styles for each route, all rendered inside the
+   light-pink face of the folder.
+   ============================================================ */
+
+/* Pages share the exact same left/right inset as Home: the inset is
+   provided by .sheet__scroll padding, so pages span the full width. */
+.page {
+  width: 100%;
+}
+
+/* ============ HOME / HERO ============ */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-7);
+  align-items: center;
+  /* slightly taller than the visible face so the hero breathes before
+     the spotlight strip below */
+  min-height: calc(min(86vh, 56.25rem) - 6rem);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-hero);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-top: var(--space-4);
+}
+
+/* oversized hero variant — "Bernice's Folder" */
+.hero__title--big {
+  font-size: var(--text-hero-big);
+  margin-top: 0;
+}
+
+/* breathing room between the italic "Bernice's" and "Folder" */
+.hero__title--big .ink-pink {
+  margin-right: 0.18em;
+}
+
+/* ---- hero load choreography: title words, motto, actions and meta
+   settle in sequence (rise + blur-to-focus), the portrait glides in
+   from the right. One orchestrated sequence, ~0.9s total. ---- */
+.hero__word {
+  display: inline-block;
+  animation: rise-in 680ms var(--ease-out-expo) both;
+}
+
+.hero__word + .hero__word,
+.hero__word:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.motto {
+  animation: rise-in 620ms var(--ease-out-expo) 210ms both;
+}
+
+.hero__actions {
+  animation: rise-in-soft 560ms var(--ease-out-expo) 330ms both;
+}
+
+.hero__meta {
+  animation: rise-in-soft 560ms var(--ease-out-expo) 430ms both;
+}
+
+.hero__photo {
+  --photo-from: scale(1.24) translateX(2.25rem);
+  animation: photo-in 950ms var(--ease-out-expo) 160ms both;
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: var(--photo-from);
+  }
+}
+
+.ink-pink {
+  color: var(--pink-accent);
+  font-style: italic;
+}
+
+.motto--big .motto__text {
+  font-size: var(--text-hero);
+}
+
+.hero__lead {
+  margin-top: var(--space-4);
+  max-width: 46ch;
+  color: var(--ink-soft);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+}
+
+/* motto with hand-drawn underline that draws itself in */
+.motto {
+  margin-top: var(--space-5);
+}
+
+.motto__text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--mauve-deep);
+}
+
+/* underlined phrase: the hand-drawn stroke hugs just this span */
+.motto__mark {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.12em;
+}
+
+.motto__underline {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.5rem;
+  overflow: visible;
+}
+
+.motto__underline path {
+  fill: none;
+  stroke: var(--rose);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  /* draws once the motto itself has settled */
+  animation: motto-draw 900ms var(--ease-out) 680ms both;
+}
+
+@keyframes motto-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  list-style: none;
+  margin-top: var(--space-6);
+  padding: var(--space-5) 0 0;
+  border-top: 1px solid var(--pink-100);
+}
+
+.hero__meta li {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.hero__meta strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0.3125rem;
+}
+
+.hero__right {
+  display: flex;
+  justify-content: center;
+}
+
+/* full-bleed portrait: fills the folder's right side, leaving only a
+   slight top padding (cancels the sheet's 4.5rem/4rem scroll padding) */
+.hero__right--photo {
+  align-self: stretch;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: calc(-1 * var(--space-8) + var(--space-4)) calc(-1 * var(--space-8))
+    -4rem 0;
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  max-height: calc(min(86vh, 56.25rem) - var(--space-4));
+  object-fit: contain;
+  object-position: bottom right;
+  pointer-events: none;
+  user-select: none;
+  /* grow 20% from the bottom-right corner to fill the empty top area */
+  transform: scale(1.2);
+  transform-origin: bottom right;
+  /* soften the hard bottom crop with a blurry fade into the face */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 76%,
+    rgba(0, 0, 0, 0.45) 90%,
+    transparent 99%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 76%,
+    rgba(0, 0, 0, 0.45) 90%,
+    transparent 99%
+  );
+}
+
+/* spotlight strip under the hero (extra top margin clears the
+   full-bleed portrait's bottom overhang) */
+.spotlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--pink-100);
+}
+
+.spotlight {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: var(--space-5);
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: transform 340ms var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  animation: rise-in-soft 540ms var(--ease-out-expo) both;
+}
+
+.spotlight:nth-child(1) {
+  animation-delay: 480ms;
+}
+
+.spotlight:nth-child(2) {
+  animation-delay: 560ms;
+}
+
+.spotlight:nth-child(3) {
+  animation-delay: 640ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight:hover {
+    transform: translateY(-0.25rem);
+    border-color: var(--pink-200);
+    box-shadow: var(--shadow-lift), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  .spotlight:hover .spotlight__arrow {
+    transform: translateX(0.25rem);
+  }
+}
+
+.spotlight:active {
+  transform: scale(0.98);
+}
+
+.spotlight__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--pink-accent);
+}
+
+.spotlight__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+}
+
+.spotlight__line {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  line-height: var(--leading-snug);
+  max-width: 32ch;
+}
+
+.spotlight__arrow {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  color: var(--pink-300);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* ============ PROJECTS ============ */
+/* fixed filter rail on the left, scrolling project grid on the right */
+.proj-layout {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.pfilter {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  animation: filter-in 520ms var(--ease-out-expo) 160ms both;
+}
+
+@keyframes filter-in {
+  from {
+    opacity: 0;
+    transform: translateX(-0.875rem);
+  }
+}
+
+.pfilter__head {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: var(--space-2);
+}
+
+.pfilter__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.pfilter__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  text-align: left;
+  padding: 0.5625rem 0.75rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pfilter__item:hover {
+    background: var(--pink-50);
+  }
+}
+
+.pfilter__item:active {
+  transform: scale(0.98);
+}
+
+.pfilter__item--active,
+.pfilter__item--active:hover {
+  background: var(--pink-100);
+  color: var(--pink-deep);
+}
+
+.pfilter__count {
+  font-size: var(--text-xs);
+  color: var(--ink-faint);
+}
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+.proj-empty {
+  grid-column: 1 / -1;
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: var(--text-base);
+}
+
+/* image placeholder atop each project card */
+.proj__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px dashed var(--pink-200);
+}
+
+.proj__media-icon {
+  font-size: var(--text-2xl);
+  color: var(--paper);
+  text-shadow: 0 2px 12px rgba(44, 20, 28, 0.18);
+  animation: icon-drift 5s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes icon-drift {
+  to {
+    transform: translateY(-0.375rem) rotate(10deg);
+  }
+}
+
+.proj__media--rose {
+  background: linear-gradient(145deg, var(--pink-200), var(--rose));
+}
+
+.proj__media--mauve {
+  background: linear-gradient(145deg, var(--mauve-soft), var(--mauve));
+}
+
+.proj__media--mint {
+  background: linear-gradient(145deg, var(--mint-soft), var(--mint));
+}
+
+.proj__media--blush {
+  background: linear-gradient(145deg, var(--blush-soft), var(--blush));
+}
+
+.proj__media--peach {
+  background: linear-gradient(145deg, var(--peach-soft), var(--peach));
+}
+
+.proj__open {
+  align-self: flex-start;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--pink-deep);
+  cursor: pointer;
+}
+
+.proj__open:hover {
+  text-decoration: underline;
+}
+
+.proj {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  scroll-margin-top: var(--space-4);
+  transition: transform 340ms var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  /* files slide onto the desk one after another (capped stagger) */
+  animation: rise-in-soft 500ms var(--ease-out-expo) both;
+  animation-delay: calc(180ms + min(var(--proj-i, 0), 7) * 55ms);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .proj:hover {
+    transform: translateY(-0.1875rem);
+    border-color: var(--pink-200);
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+}
+
+.proj--flash {
+  animation: proj-flash 1.4s var(--ease-out);
+}
+
+@keyframes proj-flash {
+  0% {
+    box-shadow: 0 0 0 3px var(--rose);
+  }
+  100% {
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+.proj__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.proj__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.proj__summary {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--ink);
+  line-height: var(--leading-snug);
+}
+
+.proj__desc {
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+}
+
+.proj__more .proj__desc {
+  margin-bottom: var(--space-3);
+}
+
+.proj__points {
+  display: grid;
+  gap: 0.375rem;
+  padding-left: 1.125rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+}
+
+.proj__points li::marker {
+  color: var(--rose);
+}
+
+.proj__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--pink-100);
+}
+
+/* ============ PROJECT MODAL (full-screen open file) ============ */
+/* lives INSIDE the folder's .sheet (via portal) — the sheet's rounded
+   corners + overflow:hidden clip the backdrop, so the shade follows
+   the folder's curves instead of sitting over them as a box */
+.pmodal {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.pmodal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  /* frosted shade: the page stays readable through the glass */
+  background: rgba(46, 16, 24, 0.38);
+  -webkit-backdrop-filter: blur(0.625rem) saturate(1.3);
+  backdrop-filter: blur(0.625rem) saturate(1.3);
+  cursor: default;
+  animation: qj-fade 280ms var(--ease-out) both;
+}
+
+/* the open "file": EXACTLY the folder language — a dark-pink tab
+   popping above the sheet (rounded top-left + curved S-corner) and a
+   light sheet below with every exposed corner rounded. */
+.pmodal__file {
+  position: relative;
+  width: min(72rem, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 1.625rem 3rem rgba(150, 40, 70, 0.32));
+  animation: pmodal-in 460ms var(--ease-spring) both;
+  will-change: transform;
+}
+
+@keyframes pmodal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(1.375rem);
+  }
+}
+
+/* the file's own tab surfaces a beat after the sheet lands */
+.pmodal__tab {
+  animation: rise-in-soft 360ms var(--ease-out-expo) 120ms both;
+}
+
+/* inner content settles in two soft beats */
+.pmodal__side {
+  animation: rise-in-soft 420ms var(--ease-out-expo) 140ms both;
+}
+
+.pmodal__story {
+  animation: rise-in-soft 420ms var(--ease-out-expo) 220ms both;
+}
+
+/* animated close — mirrors the entrance, shorter */
+.pmodal--closing .pmodal__backdrop {
+  animation: qj-fade-out 240ms var(--ease-out) both;
+}
+
+.pmodal--closing .pmodal__file {
+  animation: pmodal-out 240ms var(--ease-out) both;
+}
+
+@keyframes pmodal-out {
+  to {
+    opacity: 0;
+    transform: scale(0.965) translateY(0.625rem);
+  }
+}
+
+.pmodal__tab {
+  position: relative;
+  align-self: flex-start;
+  margin-bottom: -1px; /* tuck the base behind the sheet, like .tabs */
+  margin-right: 3.75rem; /* room for the curved S-corner */
+  background: linear-gradient(180deg, var(--folder-back), var(--folder-back-2));
+  color: var(--tab-ink-strong);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 0.5625rem 1.25rem;
+  border-radius: 1.25rem 0 0 0;
+}
+
+/* curved S-corner sweeping the tab down into the sheet's top edge
+   (same SVG as the folder toolbar — gradient stops mirror
+   --folder-back/--folder-back-2) */
+.pmodal__tab::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -3.25rem;
+  width: 3.5rem;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2054%2054'%20preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='0'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%23e98aa1'/%3E%3Cstop%20offset='1'%20stop-color='%23dc6a86'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d='M0,0L4,0C28,0%2028,54%2054,54L0,54Z'%20fill='url(%23g)'/%3E%3C/svg%3E")
+    no-repeat;
+  background-size: 100% 100%;
+}
+
+.pmodal__sheet {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: linear-gradient(160deg, var(--face), var(--face-2));
+  /* top-left corner sits under the tab (same as the folder sheet);
+     every exposed corner is rounded */
+  border-radius: 0 var(--radius-xl) var(--radius-xl) var(--radius-xl);
+  padding: var(--space-6) var(--space-7) var(--space-6);
+  overflow: hidden;
+  display: flex;
+}
+
+.pmodal__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--pink-200);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: var(--text-lg);
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.pmodal__close:hover {
+  background: var(--pink-50);
+}
+
+.pmodal__close:active {
+  transform: scale(0.94);
+}
+
+.pmodal__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-7);
+  width: 100%;
+  min-height: 0;
+}
+
+.pmodal__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-200) transparent;
+  padding-right: var(--space-2);
+}
+
+.pmodal__media {
+  flex-shrink: 0;
+}
+
+.pmodal__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.pmodal__summary {
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: var(--leading-snug);
+}
+
+.pmodal__facts {
+  display: grid;
+  gap: var(--space-3);
+  border-top: 1px dashed var(--pink-200);
+  padding-top: var(--space-4);
+}
+
+.pmodal__fact dt {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.pmodal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.pmodal__story {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-200) transparent;
+  padding-right: var(--space-3);
+}
+
+.pmodal__story-head {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--pink-deep);
+  margin-bottom: var(--space-3);
+}
+
+.pmodal__story-head + .pmodal__para ~ .pmodal__story-head,
+.pmodal__para + .pmodal__story-head {
+  margin-top: var(--space-5);
+}
+
+.pmodal__para {
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-3);
+}
+
+/* ============ EXPERIENCE — the internship, told file by file ============
+   A scroll story: scene opener, three project "files" in the folder's
+   own tab + sheet grammar (each with a living vignette), then a close.
+   A timeline rail on the left fills with scroll progress. All scroll
+   reveals are progressive (@supports view()); without support the page
+   is simply fully visible. */
+
+/* stats reuse the hero meta grammar; retimed for this page's sequence */
+.xp-story__stats {
+  margin-top: 0;
+  margin-bottom: var(--space-8);
+  animation-delay: 240ms;
+}
+
+/* ---- story flow + timeline rail ---- */
+.xp-story__flow {
+  --rail-x: 3.625rem;
+  position: relative;
+  display: grid;
+  gap: var(--space-8);
+  padding-left: 5.5rem;
+}
+
+.xp-story__rail,
+.xp-story__rail-fill {
+  position: absolute;
+  left: var(--rail-x);
+  top: 0.375rem;
+  bottom: 0.375rem;
+  width: 2px;
+  border-radius: var(--radius-pill);
+}
+
+.xp-story__rail {
+  background: var(--pink-100);
+}
+
+.xp-story__rail-fill {
+  background: linear-gradient(180deg, var(--pink-300), var(--pink-accent));
+  transform-origin: top;
+}
+
+/* the thread fills as the reader scrolls the sheet */
+@supports (animation-timeline: scroll()) {
+  .xp-story__rail-fill {
+    animation: rail-fill linear both;
+    animation-timeline: --sheet-scroll;
+  }
+}
+
+@keyframes rail-fill {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.xp-month {
+  position: absolute;
+  left: 0;
+  width: 3rem;
+  text-align: right;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.xp-month--start {
+  top: 0;
+}
+
+.xp-month--mid {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.xp-month--end {
+  bottom: 0;
+}
+
+/* chapter / file dots pinned to the thread */
+.xp-chapter,
+.xp-file {
+  position: relative;
+}
+
+.xp-chapter::before,
+.xp-file::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail-x) - 5.5rem - 0.25rem);
+  top: 0.625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--pink-accent);
+  border: 2px solid var(--face);
+}
+
+/* ---- scene opener (above the fold: load entrance, not scroll) ---- */
+.xp-scene__line {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  max-width: 32ch;
+  animation: rise-in var(--dur-enter) var(--ease-out-expo) 340ms both;
+}
+
+.xp-scene__text {
+  margin-top: var(--space-4);
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  max-width: 56ch;
+  animation: rise-in-soft var(--dur-enter) var(--ease-out-expo) 460ms both;
+}
+
+/* ---- a project "file": mini tab + paper sheet ---- */
+/* story files are content, not buttons: no hover lift (a lift would
+   suggest they're clickable, and the inner vignettes already move) */
+.xp-file {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  filter: drop-shadow(0 0.875rem 1.5rem rgba(150, 40, 70, 0.13));
+}
+
+.xp-file__tab {
+  position: relative;
+  margin-bottom: -1px;
+  margin-right: 2.75rem;
+  background: linear-gradient(180deg, var(--folder-back), var(--folder-back-2));
+  color: var(--tab-ink-strong);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 0.4375rem 1rem;
+  border-radius: 0.875rem 0 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* curved S-corner, same SVG as the folder toolbar (gradient stops
+   mirror --folder-back/--folder-back-2; data-URIs can't read vars) */
+.xp-file__tab::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2.25rem;
+  width: 2.5rem;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2054%2054'%20preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='0'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%23e98aa1'/%3E%3Cstop%20offset='1'%20stop-color='%23dc6a86'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d='M0,0L4,0C28,0%2028,54%2054,54L0,54Z'%20fill='url(%23g)'/%3E%3C/svg%3E")
+    no-repeat;
+  background-size: 100% 100%;
+}
+
+.xp-file__sheet {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-6);
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.xp-file__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-3);
+}
+
+.xp-file__text {
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+}
+
+.xp-file__text + .xp-file__text {
+  margin-top: var(--space-3);
+}
+
+.xp-file__vignette {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---- vignette 1: the Plumber pipeline ---- */
+.pipeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  padding: var(--space-3) 0;
+}
+
+.pipeline__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.pipeline__node {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: var(--text-lg);
+  color: var(--ink);
+  border: 1px solid;
+  box-shadow: var(--shadow-soft);
+}
+
+/* one shared 4.8s loop tells the story over and over: the form node
+   sends (pulse), the current travels wire 1, the gear works (glow),
+   the current travels wire 2, the done node receives (pop). All
+   pulses are keyed to percentages of the same loop. */
+.pipeline__node--form {
+  background: var(--blush-soft);
+  border-color: var(--blush);
+  animation: node-send 4.8s var(--ease-in-out) infinite;
+}
+
+.pipeline__node--gear {
+  background: var(--peach-soft);
+  border-color: var(--peach);
+  /* spin owns transform; the work glow only touches box-shadow */
+  animation: gear-spin 9s linear infinite,
+    node-work 4.8s var(--ease-in-out) infinite;
+}
+
+@keyframes gear-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pipeline__node--done {
+  background: var(--mint-soft);
+  border-color: var(--mint);
+  animation: node-arrive 4.8s var(--ease-in-out) infinite;
+}
+
+@keyframes node-send {
+  0%,
+  2% {
+    transform: scale(1);
+    box-shadow: var(--shadow-soft);
+  }
+  6% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 0.375rem rgba(255, 202, 212, 0.45), var(--shadow-soft);
+  }
+  12%,
+  100% {
+    transform: scale(1);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+@keyframes node-work {
+  0%,
+  26% {
+    box-shadow: var(--shadow-soft);
+  }
+  33% {
+    box-shadow: 0 0 0 0.375rem rgba(255, 229, 217, 0.6), var(--shadow-soft);
+  }
+  42%,
+  100% {
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+@keyframes node-arrive {
+  0%,
+  60% {
+    transform: scale(1);
+    box-shadow: var(--shadow-soft);
+  }
+  66% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 0.4375rem rgba(216, 226, 220, 0.65), var(--shadow-soft);
+  }
+  74%,
+  100% {
+    transform: scale(1);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+.pipeline__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.pipeline__wire {
+  position: relative;
+  flex: 1;
+  min-width: 0.875rem;
+  height: 2px;
+  margin-top: calc(1.5rem - 1px);
+  border-radius: var(--radius-pill);
+  background: var(--pink-200);
+  transform-origin: left top;
+}
+
+/* the current: a soft comet that crosses each wire in turn */
+.pipeline__wire::after {
+  content: "";
+  position: absolute;
+  inset: -2px 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+      90deg,
+      transparent 15%,
+      var(--pink-accent) 50%,
+      transparent 85%
+    )
+    no-repeat;
+  background-size: 45% 100%;
+  background-position: -120% 0;
+}
+
+.pipeline__wire--1::after {
+  animation: wire-flow-1 4.8s linear infinite;
+}
+
+.pipeline__wire--2::after {
+  animation: wire-flow-2 4.8s linear infinite;
+}
+
+@keyframes wire-flow-1 {
+  0%,
+  6% {
+    background-position: -120% 0;
+  }
+  32%,
+  100% {
+    background-position: 220% 0;
+  }
+}
+
+@keyframes wire-flow-2 {
+  0%,
+  36% {
+    background-position: -120% 0;
+  }
+  62%,
+  100% {
+    background-position: 220% 0;
+  }
+}
+
+/* ---- vignette 2: MATAbot chat ---- */
+.xp-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 21rem;
+}
+
+.xp-chat__row {
+  position: relative; /* anchors the typing indicator */
+  display: flex;
+  align-items: flex-end;
+  gap: 0.375rem;
+}
+
+.xp-chat__avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, var(--folder-back), var(--folder-back-2));
+  color: var(--face);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+.xp-chat__bubble {
+  width: fit-content;
+  max-width: 16.5rem;
+  padding: 0.5625rem 0.875rem;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  border-radius: 1.0625rem;
+}
+
+.xp-chat__bubble--user {
+  align-self: flex-end;
+  background: linear-gradient(180deg, var(--pink-200), var(--pink-300));
+  color: var(--tab-ink-strong);
+  font-weight: var(--weight-medium);
+  border-bottom-right-radius: 0.3125rem;
+  transform-origin: bottom right;
+}
+
+.xp-chat__bubble--bot {
+  background: var(--pink-50);
+  border: 1px solid var(--pink-100);
+  color: var(--ink);
+  border-bottom-left-radius: 0.3125rem;
+  transform-origin: bottom left;
+}
+
+/* ---- timed playback: armed (waiting) -> play (conversation runs).
+   Arming only happens via JS once IntersectionObserver is confirmed,
+   so the no-JS / no-IO / reduced-motion default stays fully visible.
+   Bubbles and avatars hide individually (never the rows) so each
+   row's typing indicator can show before its reply lands. */
+.xp-chat--armed .xp-chat__bubble,
+.xp-chat--armed .xp-chat__avatar {
+  opacity: 0;
+}
+
+.xp-chat--play .xp-chat__bubble,
+.xp-chat--play .xp-chat__avatar {
+  opacity: 1;
+  animation: bubble-in 520ms var(--ease-spring) both;
+}
+
+/* question one */
+.xp-chat--play > :nth-child(1) {
+  animation-delay: 150ms;
+}
+
+/* avatar arrives with the typing dots, the reply follows */
+.xp-chat--play > :nth-child(2) .xp-chat__avatar {
+  animation-delay: 750ms;
+}
+
+.xp-chat--play > :nth-child(2) .xp-chat__bubble {
+  animation-delay: 1700ms;
+}
+
+/* question two */
+.xp-chat--play > :nth-child(3) {
+  animation-delay: 2750ms;
+}
+
+.xp-chat--play > :nth-child(4) .xp-chat__avatar {
+  animation-delay: 3350ms;
+}
+
+.xp-chat--play > :nth-child(4) .xp-chat__bubble {
+  animation-delay: 4300ms;
+}
+
+/* typing dots: a small bot bubble that appears while the reply is
+   "being written", vanishing exactly as the real bubble pops in */
+.xp-chat__typing {
+  position: absolute;
+  left: 1.875rem; /* avatar width + gap */
+  bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5625rem 0.6875rem;
+  background: var(--pink-50);
+  border: 1px solid var(--pink-100);
+  border-radius: 1.0625rem;
+  border-bottom-left-radius: 0.3125rem;
+  opacity: 0;
+  transform-origin: bottom left;
+}
+
+.xp-chat__typing-dot {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background: var(--pink-300);
+}
+
+.xp-chat--play .xp-chat__typing {
+  animation: typing-pop 950ms var(--ease-out) both;
+}
+
+.xp-chat--play > :nth-child(2) .xp-chat__typing {
+  animation-delay: 750ms;
+}
+
+.xp-chat--play > :nth-child(4) .xp-chat__typing {
+  animation-delay: 3350ms;
+}
+
+.xp-chat--play .xp-chat__typing-dot {
+  animation: typing-dot 900ms var(--ease-in-out) infinite;
+}
+
+.xp-chat--play .xp-chat__typing-dot:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.xp-chat--play .xp-chat__typing-dot:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+@keyframes typing-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(0.25rem) scale(0.9);
+  }
+  12%,
+  86% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes typing-dot {
+  0%,
+  60%,
+  100% {
+    transform: none;
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-0.1875rem);
+    opacity: 1;
+  }
+}
+
+/* ---- vignette 3: three drafts fanning out ---- */
+/* decorative only: no pointer events, no hover. The sheets drift
+   gently (papers settling) while the summary lines shimmer as if the
+   bots are still writing. */
+.fanstack {
+  position: relative;
+  width: 100%;
+  height: 13rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* outer: position + scroll fan-out (transform) */
+.fanstack__sheet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10.5rem;
+}
+
+.fanstack__sheet:nth-child(1) {
+  transform: translate(-50%, -50%) translateX(-3.25rem) rotate(-8deg);
+}
+
+.fanstack__sheet:nth-child(2) {
+  transform: translate(-50%, -50%) translateY(-0.5rem) rotate(-1deg);
+  z-index: 1;
+}
+
+.fanstack__sheet:nth-child(3) {
+  transform: translate(-50%, -50%) translateX(3.25rem) rotate(7deg);
+  z-index: 2;
+}
+
+/* inner: the visible card + idle drift (separate element so the
+   drift never fights the scroll-driven fan-out transform) */
+.fanstack__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4375rem;
+  padding: 0.875rem;
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  animation: sheet-drift 4.6s var(--ease-in-out) infinite alternate;
+}
+
+.fanstack__sheet:nth-child(1) .fanstack__card {
+  animation-duration: 5.4s;
+  animation-delay: 0.5s;
+  --write-delay: 0s;
+}
+
+.fanstack__sheet:nth-child(2) .fanstack__card {
+  --write-delay: 1.1s;
+}
+
+.fanstack__sheet:nth-child(3) .fanstack__card {
+  animation-duration: 5s;
+  animation-delay: 1s;
+  --write-delay: 2.2s;
+}
+
+@keyframes sheet-drift {
+  to {
+    transform: translateY(-0.3125rem) rotate(0.7deg);
+  }
+}
+
+.fanstack__head {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--pink-deep);
+}
+
+/* lines shimmer like text being drafted, staggered per line and
+   offset per sheet via --write-delay */
+.fanstack__line {
+  height: 0.375rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+      90deg,
+      var(--pink-100) 30%,
+      var(--pink-200) 50%,
+      var(--pink-100) 70%
+    )
+    var(--pink-100);
+  background-size: 240% 100%;
+  background-position: 200% 0;
+  animation: line-write 3.4s var(--ease-in-out) infinite;
+}
+
+@keyframes line-write {
+  0% {
+    background-position: 200% 0;
+  }
+  60%,
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.fanstack__line--1 {
+  width: 100%;
+  animation-delay: var(--write-delay, 0s);
+}
+
+.fanstack__line--2 {
+  width: 72%;
+  animation-delay: calc(var(--write-delay, 0s) + 0.2s);
+}
+
+.fanstack__line--3 {
+  width: 86%;
+  animation-delay: calc(var(--write-delay, 0s) + 0.4s);
+}
+
+.fanstack__tag {
+  margin-top: 0.25rem;
+  font-size: var(--text-xs);
+  color: var(--ink-faint);
+}
+
+/* ---- closing chapter ---- */
+.xp-close__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.xp-close__text {
+  margin-top: var(--space-3);
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  max-width: 58ch;
+}
+
+.xp-close__chips {
+  margin-top: var(--space-5);
+}
+
+.xp-close__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* ---- scroll-driven reveals (progressive; static without support) ---- */
+@supports (animation-timeline: view()) {
+  .xp-file,
+  .xp-close {
+    animation: story-rise var(--ease-out) both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 45%;
+  }
+
+  .pipeline__step,
+  .pipeline__wire,
+  .fanstack__sheet {
+    animation-timing-function: var(--ease-out);
+    animation-fill-mode: both;
+    animation-timeline: view();
+  }
+
+  /* pipeline lights up left to right as it scrolls in */
+  .pipeline__step {
+    animation-name: pop-in;
+  }
+
+  .pipeline__wire {
+    animation-name: wire-grow;
+  }
+
+  .pipeline__step:nth-child(1) {
+    animation-range: entry 10% entry 35%;
+  }
+
+  .pipeline__wire--1 {
+    animation-range: entry 22% entry 47%;
+  }
+
+  .pipeline__step--mid {
+    animation-range: entry 34% entry 59%;
+  }
+
+  .pipeline__wire--2 {
+    animation-range: entry 46% entry 71%;
+  }
+
+  .pipeline__step--last {
+    animation-range: entry 58% entry 83%;
+  }
+
+  /* (the chat is time-based, armed by IntersectionObserver instead
+     of scroll-scrubbed — see the playback rules above) */
+
+  /* drafts fan out from a single stack */
+  .fanstack__sheet {
+    animation-name: fan-out;
+    animation-range: entry 12% entry 60%;
+  }
+}
+
+@keyframes story-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.75rem) scale(0.985);
+  }
+}
+
+@keyframes wire-grow {
+  from {
+    transform: scale(0);
+  }
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.625rem) scale(0.95);
+  }
+}
+
+@keyframes fan-out {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-story__rail-fill,
+  .xp-file,
+  .xp-close,
+  .pipeline__step,
+  .pipeline__wire,
+  .pipeline__wire::after,
+  .pipeline__node--form,
+  .pipeline__node--gear,
+  .pipeline__node--done,
+  .fanstack__sheet,
+  .fanstack__card,
+  .fanstack__line {
+    animation: none !important;
+  }
+}
+
+/* ============ RECOGNITIONS ============ */
+/* headline award: the startup challenge podium finish.
+   Featured treatment: larger footprint, warm 135° gradient, deep
+   elevation, gold trophy badge and an entrance animation. */
+.award-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  background: linear-gradient(135deg, var(--paper), var(--blush-soft) 55%, var(--peach-soft));
+  border: 1px solid var(--pink-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-7);
+  min-height: 24rem;
+  box-shadow: var(--shadow-feature), var(--shadow-lift),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-8);
+  animation: award-hero-enter 640ms var(--ease-out-expo) both;
+}
+
+/* gold-gradient badge behind the trophy: glow + inner shadow for depth.
+   Pops in with a spring, then a single light sweep crosses it. */
+.award-hero__medal {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  box-shadow: 0 0 20px var(--gold-glow),
+    inset 0 -0.625rem 1.25rem rgba(150, 40, 70, 0.25),
+    inset 0 0.5rem 0.875rem rgba(255, 255, 255, 0.45);
+  animation: pop-in 560ms var(--ease-spring) 260ms both;
+}
+
+.award-hero__medal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  animation: medal-shine 1100ms var(--ease-out) 950ms both;
+}
+
+@keyframes medal-shine {
+  to {
+    transform: translateX(130%);
+  }
+}
+
+.award-hero__medal-glyph {
+  font-size: var(--text-hero-big);
+  line-height: 1;
+  filter: drop-shadow(0 0.375rem 0.5rem rgba(150, 40, 70, 0.3));
+  animation: glyph-float 4.5s var(--ease-in-out) 2s infinite alternate;
+}
+
+@keyframes glyph-float {
+  to {
+    transform: translateY(-0.4rem) rotate(-3deg);
+  }
+}
+
+.award-hero__place {
+  display: inline-block;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--paper);
+  background: linear-gradient(90deg, var(--pink-accent), var(--coral));
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 18px rgba(255, 142, 114, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  margin-bottom: var(--space-4);
+  animation: rise-in-soft 480ms var(--ease-out-expo) 300ms both;
+}
+
+.award-hero__title {
+  animation: rise-in 560ms var(--ease-out-expo) 370ms both;
+}
+
+.award-hero__text {
+  animation: rise-in-soft 520ms var(--ease-out-expo) 460ms both;
+}
+
+.award-hero__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-hero);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  display: flex;
+  flex-direction: column;
+}
+
+.award-hero__title-sub {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.award-hero__text {
+  margin: var(--space-4) 0 var(--space-5);
+  font-size: var(--text-lg);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  max-width: 58ch;
+}
+
+/* featured CTA: ≥48px target, hover lift, load entrance */
+.award-hero__cta {
+  min-height: 3rem;
+  padding: 0.875rem 1.75rem;
+  font-size: var(--text-md);
+  animation: rise-in-soft 500ms var(--ease-out-expo) 560ms both;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .award-hero__cta:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@keyframes award-hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.375rem) scale(0.992);
+  }
+}
+
+.award-list__head {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+  animation: rise-in-soft 480ms var(--ease-out-expo) 420ms both;
+}
+
+.award-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.award {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  animation: rise-in-soft 500ms var(--ease-out-expo) both;
+}
+
+.award:nth-child(1) {
+  animation-delay: 500ms;
+}
+
+.award:nth-child(2) {
+  animation-delay: 580ms;
+}
+
+.award:nth-child(3) {
+  animation-delay: 660ms;
+}
+
+.award__year {
+  flex-shrink: 0;
+}
+
+.award__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.award__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-tight);
+}
+
+.award__text {
+  margin-top: 0.375rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  max-width: 70ch;
+}
+
+.award .btn {
+  flex-shrink: 0;
+}
+
+/* ============ TESTIMONIALS — rotating header pill ============ */
+/* the rotor wraps the two swapping pills: it owns the header's load
+   entrance and is the relative box the outgoing pill rolls out of */
+.testi-head__rotor {
+  position: relative;
+  display: inline-flex;
+  margin-top: var(--space-3);
+  animation: rise-in-soft 500ms var(--ease-out-expo) 180ms both;
+}
+
+.testi-head__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--ink);
+  border: 1px solid;
+  padding: 0.5625rem 1.25rem;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-soft);
+  will-change: transform, opacity, filter;
+}
+
+/* incoming source rolls up from below and settles with a soft spring */
+.testi-head__pill--in {
+  animation: testi-pill-in 480ms var(--ease-spring);
+}
+
+/* outgoing source lifts off the top (overlaid on the rotor), then unmounts */
+.testi-head__pill--out {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: testi-pill-out 380ms var(--ease-out) forwards;
+}
+
+@keyframes testi-pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem) scale(0.96);
+    filter: blur(4px);
+  }
+}
+
+@keyframes testi-pill-out {
+  to {
+    opacity: 0;
+    transform: translateY(-0.6rem) scale(0.97);
+    filter: blur(4px);
+  }
+}
+
+.testi-head__pill--rose {
+  background: var(--pink-50);
+  border-color: var(--rose);
+}
+
+.testi-head__pill--rose .eyebrow__dot {
+  background: var(--pink-deep);
+}
+
+.testi-head__pill--mint {
+  background: var(--mint-soft);
+  border-color: var(--mint);
+}
+
+.testi-head__pill--mint .eyebrow__dot {
+  background: var(--mauve-deep);
+}
+
+.testi-head__pill--peach {
+  background: var(--peach-soft);
+  border-color: var(--peach);
+}
+
+.testi-head__pill--peach .eyebrow__dot {
+  background: var(--mauve);
+}
+
+.testi-head .section-intro__lead {
+  margin-top: var(--space-4);
+}
+
+/* This page holds only a few cards, so tighten the header rhythm: drop
+   the title's top margin and pull the grid up. Keeps everything inside
+   the folder face at desktop heights instead of leaving a sliver of
+   dead scroll into the empty padding below the cards. */
+.testi-head {
+  margin-bottom: var(--space-5);
+}
+
+.testi-head .section-intro__title {
+  margin-top: 0;
+}
+
+/* ============ TESTIMONIALS ============ */
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+.testi {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  animation: rise-in-soft 520ms var(--ease-out-expo) both;
+}
+
+.testi:nth-child(1) {
+  animation-delay: 240ms;
+}
+
+.testi:nth-child(2) {
+  animation-delay: 320ms;
+}
+
+.testi:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.testi--plain {
+  grid-column: 1 / -1;
+}
+
+.testi__mark {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  line-height: 0.5;
+  color: var(--rose);
+  height: 0.875rem;
+}
+
+.testi__quote {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--ink);
+}
+
+.testi__quote--small {
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+}
+
+.testi__para {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-3);
+}
+
+.testi__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--pink-100);
+}
+
+.testi__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+
+.testi__avatar--rose {
+  background: var(--rose);
+}
+
+.testi__avatar--mint {
+  background: var(--mint);
+}
+
+.testi__avatar--peach {
+  background: var(--peach);
+}
+
+.testi__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.testi__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.testi__role {
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+
+.testi__foot .btn {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ============ SKILLS — SKILLSETS hero ============ */
+/* The pill physics layer now lives at the folder-face level (see
+   FolderShell + .gravity-pills below) so it can roam the whole face;
+   the page itself just holds the hero + skill groups. */
+.skills-page {
+  position: relative;
+}
+
+/* no extra top padding now that the pills no longer float here */
+.skillset-hero {
+  position: relative;
+  margin-bottom: var(--space-7);
+}
+
+.skillset-hero__word {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-wordmark);
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.95;
+  color: var(--ink);
+  user-select: none;
+  /* the After Effects tracking move: letters glide together as the
+     wordmark sharpens into place (one element, runs once) */
+  animation: wordmark-in 900ms var(--ease-out-expo) both;
+}
+
+@keyframes wordmark-in {
+  from {
+    opacity: 0;
+    letter-spacing: 0.06em;
+    transform: translateY(0.875rem);
+    filter: blur(10px);
+  }
+}
+
+.skillset-hero__lead {
+  margin-top: var(--space-4);
+  animation-delay: 220ms;
+}
+
+/* gravity layer: spans the whole folder face, floating over the page.
+   It is pointer-transparent (the pill bodies re-enable pointer events,
+   so they stay grabbable) and is intentionally NOT clipped here — the
+   parent .sheet's overflow + border-radius clip the pills to the folder's
+   rounded corners, so a tossed pill curves into the corner like the page. */
+.gravity-pills {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* outer wrapper owns position + the bouncy staggered drop, so the
+   inner body is free to carry the drag transform without fighting
+   the animation. Pills may overlap and pile on each other. */
+.gravity-pill {
+  position: absolute;
+  display: inline-block;
+  animation: pill-gravity-drop 1s cubic-bezier(0.34, 1.56, 0.64, 1)
+    var(--pill-delay, 0s) both;
+}
+
+/* the pill currently being dragged rises above its siblings */
+.gravity-pill--lifted {
+  z-index: 2;
+}
+
+/* pill body at ~2x the previous size */
+.gravity-pill__body {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 1.125rem 2.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--pink-100);
+  box-shadow: var(--shadow-pill-depth);
+  opacity: 0.85;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  /* release eases back with a soft settle; the dragging modifier drops
+     the transform transition so the grab tracks the pointer 1:1 */
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+    transform 360ms var(--ease-spring), opacity var(--dur-fast) var(--ease-out);
+}
+
+.gravity-pill__body--dragging {
+  cursor: grabbing;
+  box-shadow: var(--shadow-lift);
+  opacity: 1;
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+@keyframes pill-gravity-drop {
+  from {
+    transform: translateY(-80vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.skillset-pill--paper {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.skillset-pill--blush {
+  background: var(--blush-soft);
+  border-color: var(--blush);
+  color: var(--ink);
+}
+
+.skillset-pill--mint {
+  background: var(--mint-soft);
+  border-color: var(--mint);
+  color: var(--ink);
+}
+
+.skillset-pill--peach {
+  background: var(--peach-soft);
+  border-color: var(--peach);
+  color: var(--ink);
+}
+
+.skillset-pill--rose {
+  background: var(--pink-50);
+  border-color: var(--rose);
+  color: var(--pink-deep);
+}
+
+/* round dark badges (✦ and ↓ in the design ref) */
+.skillset-pill--dot {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  border-radius: 50%;
+  width: 5.5rem;
+  height: 5.5rem;
+  padding: 0;
+  justify-content: center;
+  font-size: var(--text-xl);
+}
+
+/* ============ SKILLS ============ */
+.skill-groups {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.skill-group {
+  animation: rise-in-soft 520ms var(--ease-out-expo) both;
+}
+
+.skill-group:nth-child(1) {
+  animation-delay: 320ms;
+}
+
+.skill-group:nth-child(2) {
+  animation-delay: 400ms;
+}
+
+.skill-group:nth-child(3) {
+  animation-delay: 480ms;
+}
+
+.skill-group:nth-child(4) {
+  animation-delay: 560ms;
+}
+
+.skill-group__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.skill-group__name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.skill-group__note {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.skill-chip {
+  padding: 0.5rem 0.9375rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  border: 1px solid;
+  transition: transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skill-chip:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+.skill-chip--blush {
+  border-color: var(--blush);
+  background: var(--blush-soft);
+}
+
+.skill-chip--peach {
+  border-color: var(--peach);
+  background: var(--peach-soft);
+}
+
+.skill-chip--mint {
+  border-color: var(--mint);
+  background: var(--mint-soft);
+}
+
+.skill-chip--rose {
+  border-color: var(--rose);
+  background: var(--pink-50);
+}
+
+/* ============ EDUCATION ============ */
+.edu-timeline {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+  padding-left: 1.625rem;
+}
+
+.edu-timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.4375rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--pink-100);
+  /* the thread draws itself down the page */
+  transform-origin: top;
+  animation: line-grow 900ms var(--ease-out-expo) 220ms both;
+}
+
+@keyframes line-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.edu {
+  position: relative;
+}
+
+.edu__body {
+  animation: rise-in-soft 520ms var(--ease-out-expo) both;
+}
+
+.edu:nth-child(1) .edu__body {
+  animation-delay: 280ms;
+}
+
+.edu:nth-child(2) .edu__body {
+  animation-delay: 460ms;
+}
+
+.edu__dot {
+  position: absolute;
+  left: -1.625rem;
+  top: 0.4375rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 3px solid var(--paper);
+  box-shadow: var(--shadow-soft);
+  animation: pop-in 420ms var(--ease-spring) both;
+}
+
+.edu:nth-child(1) .edu__dot {
+  animation-delay: 340ms;
+}
+
+.edu:nth-child(2) .edu__dot {
+  animation-delay: 620ms;
+}
+
+.edu__dot--rose {
+  background: var(--rose);
+}
+
+.edu__dot--mint {
+  background: var(--mint);
+}
+
+.edu__body {
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-soft);
+}
+
+.edu__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.edu__school {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.edu__course {
+  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.edu__achievements {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.edu__achievement {
+  background: var(--blush-soft);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.edu__achievement-title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.edu__achievement-text {
+  margin-top: 0.375rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  max-width: 75ch;
+}
+
+/* ---- Life at ITE: the overseas trip + a bento gallery of upskilling.
+   A reflowing card grid (not the schools' rail), so the page closes on a
+   different rhythm than the timeline above it and the Experience story. */
+.edu-life {
+  margin-top: var(--space-8);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.edu-life__head {
+  animation: rise-in-soft 520ms var(--ease-out-expo) both;
+}
+
+.edu-life__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.edu-life__lead {
+  margin-top: 0.375rem;
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+}
+
+/* the trip is the headline: a wider feature card with a warm accent edge */
+.edu-life__highlight {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--mauve-soft), var(--paper) 70%);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-7);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  animation: rise-in-soft 520ms var(--ease-out-expo) 80ms both;
+}
+
+.edu-life__highlight::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0.3125rem;
+  background: linear-gradient(180deg, var(--coral), var(--mauve));
+}
+
+.edu-life__badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--mauve-deep);
+}
+
+.edu-life__highlight-title {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.edu-life__highlight-role {
+  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  color: var(--ink-faint);
+}
+
+.edu-life__highlight-text {
+  margin-top: var(--space-3);
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+  max-width: 70ch;
+}
+
+/* bento gallery: a tidy 3-up (the 9 cards fall into clean rows of three),
+   dropping to two then one as the face narrows. Explicit tracks rather
+   than auto-fill, since the fluid rem root would otherwise overshoot to
+   five thin columns on a wide face. */
+.upskill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+@media (max-width: 1100px) {
+  .upskill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.upskill {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--paper);
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition: transform 340ms var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  /* cards surface one after another (capped stagger, like .proj) */
+  animation: rise-in-soft 500ms var(--ease-out-expo) both;
+  animation-delay: calc(120ms + min(var(--i, 0), 8) * 50ms);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .upskill:hover {
+    transform: translateY(-0.1875rem);
+    border-color: var(--pink-200);
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+}
+
+/* small type tag — same colour grammar as the skill chips */
+.upskill__tag {
+  align-self: flex-start;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.upskill--blush .upskill__tag {
+  border-color: var(--blush);
+  background: var(--blush-soft);
+}
+
+.upskill--peach .upskill__tag {
+  border-color: var(--peach);
+  background: var(--peach-soft);
+}
+
+.upskill--mint .upskill__tag {
+  border-color: var(--mint);
+  background: var(--mint-soft);
+}
+
+.upskill--rose .upskill__tag {
+  border-color: var(--rose);
+  background: var(--pink-50);
+}
+
+.upskill__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.upskill__text {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  line-height: var(--leading-normal);
+}
+
+.upskill__meta {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--ink-faint);
+}
+
+/* ============ RESPONSIVE PAGES ============ */
+@media (max-width: 820px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    min-height: 0;
+  }
+
+  .hero__right {
+    order: -1;
+    padding-top: var(--space-4);
+  }
+
+  .hero__right--photo {
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__photo {
+    max-height: 20rem;
+    object-position: center;
+    transform: none;
+    /* stacked layout: the portrait rises instead of gliding sideways */
+    --photo-from: translateY(1rem) scale(1.02);
+  }
+
+  .spotlights {
+    grid-template-columns: 1fr;
+  }
+
+  .proj-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .pfilter {
+    position: static;
+  }
+
+  .pfilter__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .proj-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pmodal__sheet {
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    overflow-y: auto;
+  }
+
+  .pmodal__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .pmodal__side,
+  .pmodal__story {
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .award-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    min-height: 0;
+  }
+
+  .award-hero__medal {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .award-hero__medal-glyph {
+    font-size: var(--text-display);
+  }
+
+  /* smaller pills + simpler footprint on small screens */
+  .gravity-pill__body {
+    font-size: var(--text-sm);
+    padding: 0.625rem 1.25rem;
+  }
+
+  .skillset-pill--dot {
+    width: 3rem;
+    height: 3rem;
+    font-size: var(--text-md);
+  }
+
+  /* experience story: rail hides, files stack copy over vignette */
+  .xp-story__flow {
+    padding-left: 0;
+    gap: var(--space-7);
+  }
+
+  .xp-story__rail,
+  .xp-story__rail-fill,
+  .xp-month,
+  .xp-chapter::before,
+  .xp-file::before {
+    display: none;
+  }
+
+  .xp-file__sheet {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  /* upskilling gallery stacks to one column on small screens */
+  .upskill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edu-life__highlight {
+    padding: var(--space-5) var(--space-5) var(--space-5) var(--space-6);
+  }
+
+  .fanstack {
+    height: 11.5rem;
+  }
+
+  .testi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .award {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .edu__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero__meta {
+    gap: var(--space-5);
+  }
+
+  .hero__photo {
+    max-height: 16rem;
+  }
+
+  /* phone: the pipeline runs top to bottom instead of left to right */
+  .pipeline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375rem;
+  }
+
+  .pipeline__step {
+    flex-direction: row;
+    gap: 0.625rem;
+  }
+
+  .pipeline__wire {
+    flex: none;
+    width: 2px;
+    height: 1.25rem;
+    min-width: 0;
+    margin: 0 0 0 calc(1.5rem - 1px);
+  }
+
+  /* vertical wires: drop the horizontal comet, keep the node pulses */
+  .pipeline__wire::after {
+    display: none;
+  }
+
+  .xp-story__stats {
+    gap: var(--space-4);
+  }
+}

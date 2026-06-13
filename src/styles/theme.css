@@ -1,0 +1,175 @@
+/* ============================================================
+   THEME — single source of truth for every design token.
+   Primary palette: white / light pink-ish neutrals.
+   Secondary palette: "Peachy Delight" (accents only).
+   No JSX file may hardcode a color, font size, or spacing value.
+   ============================================================ */
+
+:root {
+  /* ===== Primary: paper, ink, pinks ===== */
+  --paper: #ffffff;
+  --ink: #1a1716;
+  --ink-soft: #6c6360;
+  --ink-faint: #9a8f8c;
+
+  --pink-50: #fdf3f5;
+  --pink-100: #fbe8ec;
+  --pink-200: #f6cdd6;
+  --pink-300: #efabbb;
+  --pink-400: #e6859b;
+  --pink-accent: #e07a92;
+  --pink-deep: #c95d77;
+  --glow: #fdeef2;
+
+  /* ===== Folder shades (kept from original design) ===== */
+  --folder-back: #e98aa1;
+  --folder-back-2: #dc6a86;
+  /* tab text on the dark-pink toolbar: deep wine for WCAG AA contrast */
+  --tab-ink: #4d1f2c;
+  --tab-ink-strong: #2e1018;
+  --face: #fdf1f5;
+  --face-2: #fbe6ee;
+
+  /* ===== Desk ambience (page background BEHIND the folder only).
+     These tokens are used exclusively by the body background in
+     global.css and swap for dark mode. The folder/portfolio palette
+     above is intentionally NOT affected by color scheme. ===== */
+  --desk: #fbf7f6;
+  --desk-ambient-1: rgba(253, 220, 230, 0.85); /* rosy top glow */
+  --desk-ambient-2: rgba(255, 228, 214, 0.7); /* peach corner */
+  --desk-ambient-3: rgba(222, 233, 226, 0.55); /* faint mint left */
+  --desk-vignette: rgba(150, 40, 70, 0.04); /* edge depth */
+
+  /* ===== Secondary: Peachy Delight (sampled from design doc) ===== */
+  --mint: #d8e2dc;
+  --mint-soft: #eef4f0;
+  --peach: #ffe5d9;
+  --peach-soft: #fff4ee;
+  --blush: #ffcad4;
+  --blush-soft: #ffeef2;
+  --rose: #f4acb7;
+  --coral: #ff8e72;
+  --gold: #ffd700;
+  --gold-deep: #ffa500;
+  --gold-glow: rgba(255, 215, 0, 0.4);
+  --mauve: #9d8189;
+  --mauve-soft: #ece3e6;
+  --mauve-deep: #7a626a;
+
+  /* ===== Typography ===== */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.1875rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.375rem;
+  --text-hero: clamp(1.875rem, 4vw, 3.25rem);
+  --text-hero-big: clamp(3.25rem, 8vw, 6.25rem);
+  --text-display: clamp(3.25rem, 7vw, 5.5rem);
+  --text-wordmark: clamp(3rem, 11vw, 9rem);
+  --text-mega: clamp(3.5rem, 9vw, 7.25rem);
+  --tracking-airy: 0.015em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  --leading-tight: 1.06;
+  --leading-snug: 1.35;
+  --leading-normal: 1.65;
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.04em;
+
+  /* ===== Spacing scale ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  /* ===== Radii ===== */
+  --radius-sm: 0.5625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.375rem;
+  --radius-xl: 1.625rem;
+  --radius-pill: 999px;
+
+  /* ===== Shadows ===== */
+  --shadow-folder: 0 1.625rem 3rem rgba(150, 40, 70, 0.16);
+  --shadow-soft: 0 12px 30px -18px rgba(44, 20, 28, 0.22);
+  --shadow-card: 0 10px 26px -16px rgba(150, 40, 70, 0.25);
+  --shadow-lift: 0 18px 38px -20px rgba(150, 40, 70, 0.35);
+  --shadow-feature: 0 12px 32px rgba(0, 0, 0, 0.15);
+  --shadow-pill-depth: 0 8px 20px -10px rgba(44, 20, 28, 0.3);
+
+  /* ===== Motion =====
+     --ease-out-expo: buttery long-tail deceleration (page + element entrances)
+     --ease-spring:   single gentle overshoot (~4%), the "iOS settle"
+     Both transform/opacity-safe and interruptible. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.24, 0.64, 1);
+  --dur-press: 140ms;
+  --dur-fast: 200ms;
+  --dur-med: 250ms;
+  --dur-slow: 420ms;
+  --dur-enter: 560ms;
+  --dur-grand: 800ms;
+  --stagger: 70ms;
+
+  /* ===== Liquid glass (overlays only: QuickJump, modal shade).
+     Translucent material lit from the top; pairs with
+     backdrop-filter blur+saturate. Overlays always float above the
+     light-pink face, so these stay constant in desk dark mode. ===== */
+  --glass-bg: rgba(255, 251, 253, 0.62);
+  --glass-bg-strong: rgba(255, 251, 253, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --glass-blur: 1.375rem;
+  --glass-saturate: 1.8;
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(150, 40, 70, 0.05);
+  --glass-shadow: 0 1.5rem 3.25rem -1.375rem rgba(150, 40, 70, 0.42);
+
+  /* fine photographic grain (SVG turbulence tile) — kills gradient
+     banding and gives desk + paper a tactile finish */
+  --grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.82'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ===== Breakpoints (reference only — used in media queries) =====
+     phone: 560px · tablet: 820px · desktop: 1100px */
+}
+
+/* ============================================================
+   Dark mode: ONLY the desk ambience behind the folder changes.
+   The folder + portfolio content keep their light design, so the
+   folder reads as a lit object sitting on a dim desk.
+
+   Resolution order:
+   1. data-theme="light" / "dark" on <html> = manual toggle (wins)
+   2. no data-theme = follow the OS/browser setting
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #1c1418;
+    --desk-ambient-1: rgba(201, 93, 119, 0.22); /* rosy top glow */
+    --desk-ambient-2: rgba(244, 172, 183, 0.1); /* soft peach corner */
+    --desk-ambient-3: rgba(157, 129, 137, 0.12); /* muted mauve left */
+    --desk-vignette: rgba(0, 0, 0, 0.35); /* edge depth */
+  }
+}
+
+:root[data-theme="dark"] {
+  --desk: #1c1418;
+  --desk-ambient-1: rgba(201, 93, 119, 0.22);
+  --desk-ambient-2: rgba(244, 172, 183, 0.1);
+  --desk-ambient-3: rgba(157, 129, 137, 0.12);
+  --desk-vignette: rgba(0, 0, 0, 0.35);
+}
