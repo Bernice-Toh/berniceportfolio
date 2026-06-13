@@ -2415,8 +2415,8 @@
 .edu-life__highlight {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--mauve-soft), var(--paper) 70%);
-  border: 1px solid var(--pink-100);
+  background: linear-gradient(135deg, var(--pink-50), var(--paper) 72%);
+  border: 1px solid var(--pink-200);
   border-radius: var(--radius-lg);
   padding: var(--space-6) var(--space-6) var(--space-6) var(--space-7);
   box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
@@ -2430,7 +2430,7 @@
   top: 0;
   bottom: 0;
   width: 0.3125rem;
-  background: linear-gradient(180deg, var(--coral), var(--mauve));
+  background: linear-gradient(180deg, var(--pink-accent), var(--rose));
 }
 
 .edu-life__badge {
@@ -2439,7 +2439,7 @@
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--mauve-deep);
+  color: var(--pink-deep);
 }
 
 .edu-life__highlight-title {
