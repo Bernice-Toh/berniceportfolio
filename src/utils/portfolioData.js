@@ -19,6 +19,7 @@ export const LINKS = {
 export const PROJECTS = [
   {
     slug: "capstone-threatvision",
+    image: "/images/ThreatVision%20%E2%80%94%20AI%20Weapon%20Detection.jpeg",
     title: "ThreatVision — AI Weapon Detection",
     category: "AI / ML",
     accent: "rose",
@@ -44,6 +45,8 @@ export const PROJECTS = [
   },
   {
     slug: "crafted-artt",
+    image:
+      "/images/Crafted.artt%20%E2%80%94%20Makers%27%20Enterprise%20Challenge%202026.jpeg",
     title: "Crafted.artt — Makers' Enterprise Challenge 2026",
     category: "Business",
     accent: "mauve",
@@ -68,6 +71,8 @@ export const PROJECTS = [
   },
   {
     slug: "wingstop-uiux",
+    image:
+      "/images/Wingstop%20App%20Kiosk%20UIUX%20Design.png",
     title: "Wingstop App & Kiosk — UI/UX Design",
     category: "UI/UX",
     accent: "mint",
@@ -91,6 +96,7 @@ export const PROJECTS = [
   },
   {
     slug: "kpop-web",
+    image: "/images/K-pop%20Merchandise%20Website.png",
     title: "K-pop Merchandise Website",
     category: "Web",
     accent: "blush",
@@ -113,6 +119,7 @@ export const PROJECTS = [
   },
   {
     slug: "nlp-sentiment",
+    image: "/images/YouTube%20Comment%20Sentiment%20Analysis.jpg",
     title: "YouTube Comment Sentiment Analysis",
     category: "AI / ML",
     accent: "rose",
@@ -136,6 +143,7 @@ export const PROJECTS = [
   },
   {
     slug: "traffic-sign-cv",
+    image: "/images/Traffic%20Sign%20Recognition.jpg",
     title: "Traffic Sign Recognition",
     category: "AI / ML",
     accent: "rose",
@@ -159,6 +167,7 @@ export const PROJECTS = [
   },
   {
     slug: "adidas-reel",
+    image: "/images/Adidas%20Short-form%20Video%20Ad.jpg",
     title: "Adidas Short-form Video Ad",
     category: "Media",
     accent: "peach",
@@ -182,6 +191,7 @@ export const PROJECTS = [
   },
   {
     slug: "apple-infographic",
+    image: "/images/Apple%20Inc.%20Infographic.png",
     title: "Apple Inc. Infographic",
     category: "Media",
     accent: "peach",
@@ -204,6 +214,7 @@ export const PROJECTS = [
   },
   {
     slug: "dmt-sustainability",
+    image: "/images/Sustainability%20Short%20Video.jpg",
     title: "Sustainability Short Video",
     category: "Media",
     accent: "peach",
@@ -226,6 +237,7 @@ export const PROJECTS = [
   },
   {
     slug: "sustainability-rpa",
+    image: "/images/Sustainability%20Digitalisation%20Challenge.jpeg",
     title: "Sustainability Digitalisation Challenge",
     category: "Automation",
     accent: "mint",

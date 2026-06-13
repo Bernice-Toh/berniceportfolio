@@ -77,10 +77,23 @@ export default function ProjectModal({ project, onClose }) {
         <div className="pmodal__grid">
           <div className="pmodal__side">
             <div
-              className={`proj__media proj__media--${project.accent} pmodal__media`}
-              aria-hidden="true"
+              className={`proj__media proj__media--${project.accent} pmodal__media ${
+                project.image ? "proj__media--image" : ""
+              }`}
             >
-              <span className="proj__media-icon">✦</span>
+              {project.image ? (
+                <img
+                  className="proj__image"
+                  src={project.image}
+                  alt={`${project.title} project preview`}
+                  loading="eager"
+                  decoding="async"
+                />
+              ) : (
+                <span className="proj__media-icon" aria-hidden="true">
+                  ✦
+                </span>
+              )}
             </div>
 
             <h2 className="pmodal__title">{project.title}</h2>

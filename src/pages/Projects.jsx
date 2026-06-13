@@ -73,10 +73,23 @@ export default function Projects() {
               style={{ "--proj-i": i }}
             >
               <div
-                className={`proj__media proj__media--${p.accent}`}
-                aria-hidden="true"
+                className={`proj__media proj__media--${p.accent} ${
+                  p.image ? "proj__media--image" : ""
+                }`}
               >
-                <span className="proj__media-icon">✦</span>
+                {p.image ? (
+                  <img
+                    className="proj__image"
+                    src={p.image}
+                    alt={`${p.title} project preview`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <span className="proj__media-icon" aria-hidden="true">
+                    ✦
+                  </span>
+                )}
               </div>
 
               <header className="proj__head">

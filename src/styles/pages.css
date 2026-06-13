@@ -404,7 +404,7 @@
   font-size: var(--text-base);
 }
 
-/* image placeholder atop each project card */
+/* image area atop each project card */
 .proj__media {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -414,6 +414,21 @@
   justify-content: center;
   overflow: hidden;
   border: 1px dashed var(--pink-200);
+}
+
+.proj__media--image {
+  align-items: stretch;
+  justify-content: stretch;
+  background: var(--paper);
+  border-style: solid;
+}
+
+.proj__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .proj__media-icon {
@@ -727,6 +742,10 @@
 
 .pmodal__media {
   flex-shrink: 0;
+}
+
+.pmodal__media .proj__image {
+  object-fit: contain;
 }
 
 .pmodal__title {
