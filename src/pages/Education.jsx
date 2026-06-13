@@ -39,6 +39,7 @@ const SCHOOLS = [
 /* the overseas trip — the headline of life outside the syllabus */
 const OSDP = {
   badge: "Overseas programme",
+  image: "/images/Overseas%20Service%20&%20Development%20%C2%B7%20Chiang%20Mai.jpeg",
   title: "Overseas Service & Development · Chiang Mai",
   role: "Community Service · Wat Pracha Krasem Primary School · Jan 2025",
   text: "Eight days in Hangdong with 24 schoolmates — cleaning and repainting the school, then running AI activities for the kids, with culture and landmark visits in between.",
@@ -150,10 +151,21 @@ export default function Education() {
         </header>
 
         <article className="edu-life__highlight">
-          <span className="edu-life__badge">{OSDP.badge}</span>
-          <h3 className="edu-life__highlight-title">{OSDP.title}</h3>
-          <p className="edu-life__highlight-role">{OSDP.role}</p>
-          <p className="edu-life__highlight-text">{OSDP.text}</p>
+          <div className="edu-life__highlight-copy">
+            <span className="edu-life__badge">{OSDP.badge}</span>
+            <h3 className="edu-life__highlight-title">{OSDP.title}</h3>
+            <p className="edu-life__highlight-role">{OSDP.role}</p>
+            <p className="edu-life__highlight-text">{OSDP.text}</p>
+          </div>
+          <figure className="edu-life__highlight-media">
+            <img
+              className="edu-life__highlight-image"
+              src={OSDP.image}
+              alt="Students posing beside a painted school mural during the Chiang Mai overseas programme"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
         </article>
 
         <div className="upskill-grid">

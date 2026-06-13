@@ -2434,6 +2434,10 @@
 .edu-life__highlight {
   position: relative;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.48fr);
+  align-items: center;
+  gap: var(--space-5);
   background: linear-gradient(135deg, var(--pink-50), var(--paper) 72%);
   border: 1px solid var(--pink-200);
   border-radius: var(--radius-lg);
@@ -2450,6 +2454,28 @@
   bottom: 0;
   width: 0.3125rem;
   background: linear-gradient(180deg, var(--pink-accent), var(--rose));
+}
+
+.edu-life__highlight-copy {
+  min-width: 0;
+}
+
+.edu-life__highlight-media {
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--pink-100);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.edu-life__highlight-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .edu-life__badge {
@@ -2697,7 +2723,12 @@
   }
 
   .edu-life__highlight {
+    grid-template-columns: 1fr;
     padding: var(--space-5) var(--space-5) var(--space-5) var(--space-6);
+  }
+
+  .edu-life__highlight-media {
+    aspect-ratio: 16 / 9;
   }
 
   .fanstack {
