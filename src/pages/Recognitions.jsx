@@ -29,6 +29,18 @@ const OTHER_AWARDS = [
   },
 ];
 
+const COURSE_CERTIFICATES = [
+  {
+    issuer: "NVIDIA",
+    title: "Fundamentals of Deep Learning",
+    type: "Certificate of Competency",
+    issued: "June 2025",
+    pdf: "/pdfs/NVIDIA.pdf",
+    image: "/images/Nvidia%20certificate.png",
+    accent: "mint",
+  },
+];
+
 export default function Recognitions() {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -37,7 +49,7 @@ export default function Recognitions() {
       <SectionIntro
         mega
         title="Awards along the way."
-        lead="Four recognitions — a startup challenge podium finish, a scholarship and two Edusave awards."
+        lead="Four recognitions — a startup challenge podium finish, a scholarship, two Edusave awards and course certificates from learning beyond school."
       />
 
       {/* The headline award: a startup challenge podium finish */}
@@ -87,6 +99,61 @@ export default function Recognitions() {
           </article>
         ))}
       </div>
+
+      <section className="cert-section" aria-labelledby="course-certificates">
+        <div className="cert-section__head">
+          <span className="cert-section__eyebrow">Course certificates</span>
+          <h2 className="cert-section__title" id="course-certificates">
+            Courses attended
+          </h2>
+          <p className="cert-section__lead">
+            Short courses and competency certificates picked up along the way.
+          </p>
+        </div>
+
+        <div className="cert-grid">
+          {COURSE_CERTIFICATES.map((cert) => (
+            <article className="cert-card" key={cert.title}>
+              <a
+                className="cert-card__preview"
+                href={cert.pdf}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${cert.title} certificate PDF`}
+              >
+                <img
+                  className="cert-card__image"
+                  src={cert.image}
+                  alt={`${cert.issuer} ${cert.title} certificate preview`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+              <div className="cert-card__body">
+                <span className={`chip chip--${cert.accent}`}>
+                  {cert.issuer}
+                </span>
+                <h3 className="cert-card__title">{cert.title}</h3>
+                <p className="cert-card__type">{cert.type}</p>
+                <dl className="cert-card__meta">
+                  <div>
+                    <dt>Issued</dt>
+                    <dd>{cert.issued}</dd>
+                  </div>
+                </dl>
+                <a
+                  className="btn btn--ghost btn--small cert-card__link"
+                  href={cert.pdf}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View PDF ↗
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       {modalOpen && (
         <ProjectModal
