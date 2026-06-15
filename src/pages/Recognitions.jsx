@@ -143,12 +143,7 @@ export default function Recognitions() {
                 <p className="cert-card__provider">{cert.provider}</p>
                 <h3 className="cert-card__title">{cert.title}</h3>
                 <p className="cert-card__type">{cert.type}</p>
-                <dl className="cert-card__meta">
-                  <div>
-                    <dt>Issued</dt>
-                    <dd>{cert.issued}</dd>
-                  </div>
-                </dl>
+                <p className="cert-card__issued">Issued {cert.issued}</p>
                 <div className="cert-card__skills" aria-label="Certificate skills">
                   {cert.skills.map((skill) => (
                     <span className="tag" key={skill}>
