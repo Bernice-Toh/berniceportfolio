@@ -1875,7 +1875,7 @@
   position: relative;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(17rem, 0.88fr) minmax(0, 1.12fr);
+  grid-template-columns: minmax(18rem, 0.95fr) minmax(20rem, 1.05fr);
   gap: var(--space-6);
   align-items: center;
   background: linear-gradient(
@@ -1916,13 +1916,15 @@
   position: relative;
   z-index: 1;
   display: block;
+  justify-self: center;
+  width: min(100%, 38rem);
   aspect-ratio: 1.35;
   overflow: visible;
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  transform: rotate(-1.2deg);
+  transform: none;
   transition: transform 340ms var(--ease-spring),
     box-shadow var(--dur-fast) var(--ease-out);
 }
@@ -1937,17 +1939,19 @@
 
 @media (hover: hover) and (pointer: fine) {
   .cert-card:hover .cert-card__preview {
-    transform: rotate(0deg) translateY(-0.1875rem);
+    transform: translateY(-0.1875rem);
   }
 }
 
 .cert-card__body {
   position: relative;
   z-index: 1;
+  justify-self: center;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-3);
+  width: min(100%, 38rem);
   min-width: 0;
 }
 
