@@ -1821,12 +1821,25 @@
 .cert-section {
   margin-top: var(--space-8);
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
   animation: rise-in-soft 520ms var(--ease-out-expo) 720ms both;
 }
 
 .cert-section__head {
+  position: relative;
   max-width: 48rem;
+  padding-left: var(--space-4);
+}
+
+.cert-section__head::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, var(--mint), var(--pink-accent));
 }
 
 .cert-section__eyebrow {
@@ -1859,25 +1872,59 @@
 }
 
 .cert-card {
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: minmax(17rem, 0.88fr) minmax(0, 1.12fr);
+  gap: var(--space-6);
   align-items: center;
-  background: linear-gradient(135deg, var(--paper), var(--pink-50));
-  border: 1px solid var(--pink-100);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  background: linear-gradient(
+    135deg,
+    var(--paper) 0%,
+    var(--pink-50) 48%,
+    var(--mint-soft) 100%
+  );
+  border: 1px solid var(--pink-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lift), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.cert-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.375rem;
+  background: linear-gradient(180deg, var(--mint), var(--pink-accent));
+}
+
+.cert-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0 38%,
+    rgba(255, 255, 255, 0.34) 48%,
+    transparent 58% 100%
+  );
+  transform: translateX(-45%);
 }
 
 .cert-card__preview {
+  position: relative;
+  z-index: 1;
   display: block;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1.35;
   overflow: hidden;
-  border: 1px solid var(--pink-100);
+  border: 1px solid var(--pink-200);
   border-radius: var(--radius-md);
   background: var(--paper);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 1.25rem 2.5rem -1.75rem rgba(44, 20, 28, 0.38);
+  transform: rotate(-1.2deg);
+  transition: transform 340ms var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-out);
 }
 
 .cert-card__image {
@@ -1887,7 +1934,16 @@
   object-fit: contain;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .cert-card:hover .cert-card__preview {
+    transform: rotate(0deg) translateY(-0.1875rem);
+    box-shadow: 0 1.5rem 3rem -1.75rem rgba(44, 20, 28, 0.45);
+  }
+}
+
 .cert-card__body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1895,10 +1951,43 @@
   min-width: 0;
 }
 
+.cert-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.cert-card__seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--paper), var(--mint-soft));
+  border: 1px solid var(--mint);
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.cert-card__provider {
+  margin-top: var(--space-1);
+  color: var(--pink-deep);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
 .cert-card__title {
   font-family: var(--font-display);
   font-weight: var(--weight-medium);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   letter-spacing: var(--tracking-tight);
   line-height: var(--leading-tight);
 }
@@ -1911,7 +2000,7 @@
 .cert-card__meta {
   display: grid;
   gap: var(--space-2);
-  border-top: 1px dashed var(--pink-200);
+  border-top: 1px dashed var(--pink-300);
   padding-top: var(--space-3);
   width: 100%;
 }
@@ -1931,8 +2020,16 @@
   font-weight: var(--weight-medium);
 }
 
+.cert-card__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
 .cert-card__link {
   margin-top: var(--space-1);
+  min-height: 44px;
+  padding: 0.875rem 1.5rem;
 }
 
 /* ============ TESTIMONIALS — rotating header pill ============ */

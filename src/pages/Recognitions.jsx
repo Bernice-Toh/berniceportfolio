@@ -32,12 +32,14 @@ const OTHER_AWARDS = [
 const COURSE_CERTIFICATES = [
   {
     issuer: "NVIDIA",
+    provider: "NVIDIA Deep Learning Institute",
     title: "Fundamentals of Deep Learning",
     type: "Certificate of Competency",
     issued: "June 2025",
     pdf: "/pdfs/NVIDIA.pdf",
     image: "/images/Nvidia%20certificate.png",
     accent: "mint",
+    skills: ["Deep Learning", "Neural Networks", "Model Training"],
   },
 ];
 
@@ -130,9 +132,15 @@ export default function Recognitions() {
                 />
               </a>
               <div className="cert-card__body">
-                <span className={`chip chip--${cert.accent}`}>
-                  {cert.issuer}
-                </span>
+                <div className="cert-card__topline">
+                  <span className={`chip chip--${cert.accent}`}>
+                    {cert.issuer}
+                  </span>
+                  <span className="cert-card__seal" aria-hidden="true">
+                    DLI
+                  </span>
+                </div>
+                <p className="cert-card__provider">{cert.provider}</p>
                 <h3 className="cert-card__title">{cert.title}</h3>
                 <p className="cert-card__type">{cert.type}</p>
                 <dl className="cert-card__meta">
@@ -141,8 +149,15 @@ export default function Recognitions() {
                     <dd>{cert.issued}</dd>
                   </div>
                 </dl>
+                <div className="cert-card__skills" aria-label="Certificate skills">
+                  {cert.skills.map((skill) => (
+                    <span className="tag" key={skill}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
                 <a
-                  className="btn btn--ghost btn--small cert-card__link"
+                  className="btn btn--primary btn--small cert-card__link"
                   href={cert.pdf}
                   target="_blank"
                   rel="noreferrer"
