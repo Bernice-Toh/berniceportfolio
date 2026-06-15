@@ -2027,7 +2027,7 @@
   margin: 0;
   color: var(--ink-soft);
   font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-regular);
   white-space: nowrap;
 }
 
