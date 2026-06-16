@@ -39,7 +39,9 @@ export default function Testimonials() {
       <div className="testi-grid">
         {TESTIMONIALS.map((t) => (
           <article
-            className={`testi ${t.wide ? "testi--wide" : ""}`}
+            className={`testi testi--${t.accent} ${
+              t.wide ? "testi--wide" : ""
+            }`}
             key={t.name}
           >
             <span className="testi__mark" aria-hidden="true">
@@ -55,7 +57,9 @@ export default function Testimonials() {
                 <span className="testi__role">{t.role}</span>
               </span>
               <a
-                className="btn btn--ghost btn--small"
+                className={`btn ${
+                  t.wide ? "btn--primary" : "btn--ghost"
+                } btn--small`}
                 href={t.pdf}
                 target="_blank"
                 rel="noreferrer"
@@ -66,7 +70,7 @@ export default function Testimonials() {
           </article>
         ))}
 
-        <article className="testi testi--plain">
+        <article className="testi testi--plain testi--peach">
           <p className="testi__quote testi__quote--small">
             A signed testimonial from secondary school, scanned from the
             original letter.
