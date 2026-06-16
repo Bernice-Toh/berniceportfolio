@@ -2150,7 +2150,8 @@
   animation-delay: 400ms;
 }
 
-.testi--plain {
+.testi--plain,
+.testi--wide {
   grid-column: 1 / -1;
 }
 

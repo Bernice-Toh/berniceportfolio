@@ -19,6 +19,16 @@ const TESTIMONIALS = [
     quote:
       "She has consistently approached her learning with initiative and a genuine willingness to acquire new knowledge and skills.",
   },
+  {
+    name: "Charmaine Mong",
+    role: "Lecturer · ITE College Central",
+    initials: "CM",
+    accent: "peach",
+    pdf: "/pdfs/bernice%20testimonial.pdf",
+    wide: true,
+    quote:
+      "Bernice is a highly motivated and enthusiastic learner with a passion for Artificial Intelligence, technology, and innovation.",
+  },
 ];
 
 export default function Testimonials() {
@@ -28,7 +38,10 @@ export default function Testimonials() {
 
       <div className="testi-grid">
         {TESTIMONIALS.map((t) => (
-          <article className="testi" key={t.name}>
+          <article
+            className={`testi ${t.wide ? "testi--wide" : ""}`}
+            key={t.name}
+          >
             <span className="testi__mark" aria-hidden="true">
               “
             </span>
